@@ -10,7 +10,7 @@ import streamlit as st
 from st_custom_components import st_audiorec
 
 # Set OpenAI API key
-openai.api_key = config.OPENAI_API_KEY
+openai.api_key = st.secrets['OPENAI_API_KEY']
 
 # Set Streamlit page configuration
 st.set_page_config(page_title="streamlit_audio_recorder")
