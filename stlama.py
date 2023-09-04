@@ -1,5 +1,4 @@
 # Import necessary libraries and modules
-from langchain.llms import CTransformers
 import re
 import config
 from langchain import PromptTemplate
