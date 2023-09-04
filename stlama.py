@@ -45,7 +45,7 @@ def process_audio(audio_file):
     sprompt = PromptTemplate.from_template(template)
 
     # Initialize the models
-    llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=config.OPENAI_API_KEY)
+    llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'])
     # llm = CTransformers(
     #     model="/Users/prathapreddy/Documents/AUDIOPEN/llama-2-7b-chat.ggmlv3.q8_0.bin",
     #     model_type="llama",
