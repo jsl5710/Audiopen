@@ -6,7 +6,6 @@ from langchain import LLMChain
 from langchain.llms import OpenAI
 import ffmpeg
 import openai
-import concurrent.future
 import streamlit as st
 from st_custom_components import st_audiorec
 
