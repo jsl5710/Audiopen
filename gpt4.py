@@ -1,79 +1,88 @@
-
+import time
 import re
-import config
-from langchain import PromptTemplate, LLMChain # just one line to import these two classes 
+from datetime import datetime
+from langchain import PromptTemplate, LLMChain
 from langchain.llms import OpenAI
-import ffmpeg
-from st_custom_components import st_audiorec
 import openai
 import streamlit as st
+from st_custom_components import st_audiorec
 
-# I've removed st_custom_components import as there's no use of it in this code
 
-openai.api_key = st.secrets['OPENAI_API_KEY']
+# Set OpenAI API key
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
+# Set Streamlit page configuration
 st.set_page_config(page_title="streamlit_audio_recorder")
-st.title(":violet[Audio]  :orange[Whisper] :headphones:")  # I've used title method to set a title for the page
+st.markdown(
+    """<style>.css-1egvi7u {margin-top: -3rem;}</style>""", unsafe_allow_html=True
+)
 
-@st.cache_data
+
+# Define Streamlit app header
+def app_header():
+    st.header(":violet[VoiceNote ] :orange[Vault] :headphones:", divider="violet")
+    st.caption(":violet[Capturing Brilliance], One Sound at a Time. :microphone:")
+    st.write("\n\n")
+
+
 def process_audio(audio_file):
-    try:
-        transcript = openai.Audio.transcribe("whisper-1", audio_file)
-        x = transcript["text"]
+    start_time = time.time()
 
-        template = """
+    # Transcribe the audio
+    transcript = openai.Audio.transcribe("whisper-1", audio_file)
+    x = transcript["text"]
 
-You're a master at transforming disorganized thoughts into crystal-clear text.  you're assisting user, who has just recorded their thoughts in audio. These thoughts might be a bit chaotic or lengthy. Your mission is to craft two essential components:
+    # LangChain template for text processing
+    template = """
+    You are an expert in converting messy thoughts into clear text.
+    Messy text: {x}
 
-1. A captivating headline: Summarize the core message of the spoken thoughts in a concise sentence.
-2. Clear text: rephrase key points or details into an easy-to-follow paragraph.
+    - Give it a nice headline and clear text
+    - Output should be a list of headline and clear text
+    """
 
-Your goal is to produce both the headline and clear text. Ensure they are brief, coherent, and accurately represent the spoken content.
+    sprompt = PromptTemplate.from_template(template)
 
-   here is the thought :{x}     
-        """
+    # Initialize the models
+    llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets["OPENAI_API_KEY"])
 
-        sprompt = PromptTemplate.from_template(template)
+    llm_chain = LLMChain(prompt=sprompt, llm=llm)
 
-        llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'], temperature=0)
-        llm_chain = LLMChain(prompt=sprompt, llm=llm)
+    # Process the text
+    z = llm_chain.run(x)
+    st.info(z)
+    headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL | re.IGNORECASE)
+    clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL | re.IGNORECASE)
 
-        z = llm_chain.run(x)
-        st.info(z)
-        headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-        clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
+    # Check if matches were found and extract the text
+    headline = headline_match.group(1).strip() if headline_match else ""
+    clear_text = clear_text_match.group(1).strip() if clear_text_match else ""
 
-        headline = headline_match.group(1).strip() if headline_match else "Headline not found"
-        clear_text = clear_text_match.group(1).strip() if clear_text_match else "Clear text not found"
+    end_time = time.time()
+    execution_time = end_time - start_time
+    st.write("Execution time:", execution_time, "seconds")
 
-        return headline, clear_text, transcript
+    return headline, clear_text, transcript['text']
 
-    except openai.error.InvalidRequestError as e:
-        st.error("Error: The audio file is too short. Minimum audio length is 0.1 seconds.")
-        return "", "", None
-
-
-def audiorec_demo_app():
-    # I am assuming you have a method to record audio 
-    # as the previous method was not working
+def mainfun():
+    # Record audio using the custom component
     wav_audio_data = st_audiorec()
-    # Replace record_audio() with your method to record the audio
 
+    # Process audio data if available
     if wav_audio_data is not None:
-            with open("recorded_audio.wav", "wb") as wav_file:
-                wav_file.write(wav_audio_data)
+        # Save the audio to a WAV file
+        with open("recorded_audio.wav", "wb") as wav_file:
+            wav_file.write(wav_audio_data)
 
-            file = "./recorded_audio.wav"
-            audio_file = open(file, "rb")
+        # Transcribe and process the audio
+        with st.status(""":rainbow[Processing Your Ideas... ]"""):
+            headline, clear_text, transcribe_text = process_audio("recorded_audio.wav")
 
-            with st.spinner("Processing Your Ideas... "):    # Spinner instead of status method to show progress
-                headline, clear_text, transcript = process_audio(audio_file)
+        # Display original voice note and final results
+        expander = st.beta_expander("Original Voice Note")
+        expander.write(transcribe_text)
+        st.write(f"Headline: {headline}")
+        st.write(f"Clear Text: {clear_text}")
 
-                with st.expander("Original Transcription"):
-                    st.write(transcript)
-
-            st.header(headline)
-            st.text(clear_text)    # removed the unused imported libraries and methods
-
-if __name__ == "__main__":
-    audiorec_demo_app()
+app_header()
+mainfun()
