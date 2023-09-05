@@ -1,7 +1,4 @@
-code, with comments explaining the changes.
 
-python
-```python
 import re
 import config
 from langchain import PromptTemplate, LLMChain # just one line to import these two classes 
