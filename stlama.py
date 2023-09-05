@@ -6,6 +6,7 @@ import streamlit as st
 from langchain import PromptTemplate
 from langchain import LLMChain
 from langchain.llms import OpenAI
+import openai
 
 # Set OpenAI API key
 openai.api_key = st.secrets['OPENAI_API_KEY']
