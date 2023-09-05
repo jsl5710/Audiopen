@@ -81,7 +81,7 @@ def audiorec_demo_app():
         file = "./recorded_audio.wav"
         audio_file = open(file, "rb")
 
-        with st.spinner("Transcribing audio..."):
+        with st.status(""":rainbow[Processing Your Ideas... ]"""):
             headline, clear_text, transcript = process_audio(audio_file)
         # st.info(headline)
         # st.success(clear_text)
