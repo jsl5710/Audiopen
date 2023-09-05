@@ -7,7 +7,7 @@ import openai
 from langchain import PromptTemplate
 from st_custom_components import st_audiorec
 from langchain import LLMChain
-from langchain.llms import OpenAI
+from langchain.llms import OpenAI, ChatOpenAI
 
 # Set OpenAI API key
 openai.api_key = st.secrets['OPENAI_API_KEY']
@@ -43,7 +43,7 @@ def process_audio(audio_file):
         sprompt = PromptTemplate.from_template(template, x=x)
 
         # Initialize the models
-        llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'])
+        llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'])
         llm_chain = LLMChain(prompt=sprompt, llm=llm)
 
         # Process the text
