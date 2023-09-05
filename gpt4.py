@@ -56,7 +56,7 @@ Your goal is to produce both the headline and clear text. Ensure they are brief,
 def audiorec_demo_app():
     # I am assuming you have a method to record audio 
     # as the previous method was not working
-      wav_audio_data = st_audiorec()
+    wav_audio_data = st_audiorec()
     # Replace record_audio() with your method to record the audio
 
     if wav_audio_data is not None:
