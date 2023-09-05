@@ -25,43 +25,43 @@ st.write("\n\n")
 
 
 # Function to transcribe audio and process text
+# Function to transcribe audio and process text
 @st.cache_data
 def process_audio(audio_file):
-    # Transcribe the audio
-    transcript = openai.Audio.transcribe("whisper-1", audio_file)
-    x = transcript["text"]
+    try:
+        # Transcribe the audio
+        transcript = openai.Audio.transcribe("whisper-1", audio_file)
+        x = transcript["text"]
 
-    # LangChain template for text processing
-    template = """
-    You are an expert in converting messy thoughts into clear text.
-    Messy text: {x}
-    
-    - Give it a nice headline and clear text
-    - Output should be a list of headline and clear text
-    """
+        # LangChain template for text processing
+        template = """
+        You are an expert in converting messy thoughts into clear text.
+        Messy text: {x}
+        
+        - Give it a nice headline and clear text
+        - Output should be a list of headline and clear text
+        """
 
-    sprompt = PromptTemplate.from_template(template)
+        sprompt = PromptTemplate.from_template(template)
 
-    # Initialize the models
-    llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'],temperature=0)
-    # llm = CTransformers(
-    #     model="/Users/prathapreddy/Documents/AUDIOPEN/llama-2-7b-chat.ggmlv3.q8_0.bin",
-    #     model_type="llama",
-    #     config={"max_new_tokens": 512, "temperature": 0.8},
-    # )
+        # Initialize the models
+        llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'], temperature=0)
+        llm_chain = LLMChain(prompt=sprompt, llm=llm)
 
-    llm_chain = LLMChain(prompt=sprompt, llm=llm)
+        # Process the text
+        z = llm_chain.run(x)
+        headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
+        clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
 
-    # Process the text
-    z = llm_chain.run(x)
-    headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-    clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
+        # Check if matches were found and extract the text
+        headline = headline_match.group(1).strip() if headline_match else ""
+        clear_text = clear_text_match.group(1).strip() if clear_text_match else ""
 
-    # Check if matches were found and extract the text
-    headline = headline_match.group(1).strip() if headline_match else ""
-    clear_text = clear_text_match.group(1).strip() if clear_text_match else ""
+        return headline, clear_text, transcript
 
-    return headline, clear_text, transcript
+    except openai.error.InvalidRequestError as e:
+        st.error("Error: The audio file is too short. Minimum audio length is 0.1 seconds.")
+        return "", "", None
 
 
 # Streamlit app
