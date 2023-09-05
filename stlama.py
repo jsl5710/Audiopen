@@ -5,6 +5,7 @@ import streamlit as st
 import openai
 
 from langchain import PromptTemplate
+from st_custom_components import st_audiorec
 from langchain import LLMChain
 from langchain.llms import OpenAI
 
@@ -65,10 +66,40 @@ def process_audio(audio_file):
 
 def audiorec_demo_app():
     # Record audio using the custom component
-    wav_audio_data = st.file_uploader("Record audio", type=["wav"])
+    wav_audio_data1 = st.file_uploader("Record audio", type=["wav"])
+    wav_audio_data2 = st_audiorec()
 
     # Process audio data if available
-    if wav_audio_data is not None:
+    if wav_audio_data2 is not None:
+        # Save the audio to a WAV file
+        with open("recorded_audio.wav", "wb") as wav_file:
+            wav_file.write(wav_audio_data)
+
+            # Transcribe and process the audio
+            file = "./recorded_audio.wav"
+            audio = open(file, "rb")
+        try:
+            with st.spinner("Processing Your Ideas..."):
+                headline, clear_text, transcript = process_audio(audio)
+
+            with st.expander("Original Transcription"):
+                st.write(transcript)
+
+            if headline and clear_text:
+                from streamlit_extras.colored_header import colored_header
+
+                colored_header(
+                    label=headline,
+                    description=clear_text,
+                    color_name="violet-70",
+                )
+        except Exception as e:
+
+    
+
+
+    # Process audio data if available
+    if wav_audio_data2 is not None:
         # Save the audio to a WAV file
         upload_dir = 'uploads'
         os.makedirs(upload_dir, exist_ok=True)
