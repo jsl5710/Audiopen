@@ -82,7 +82,6 @@ def process_audio(audio_file):
 
     # Check if matches were found and extract the text
     headline = headline_match.group(1).strip() if headline_match else ""
-    clear_text = clear_text_match.group(1).strip() if clear_text_match else ""
 
     end_time = time.time()
     execution_time = end_time - start_time
