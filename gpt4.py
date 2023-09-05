@@ -60,7 +60,7 @@ def audiorec_demo_app():
     # Replace record_audio() with your method to record the audio
 
     if wav_audio_data is not None:
-        with open("recorded_audio.wav", "wb") as wav_file:
+            with open("recorded_audio.wav", "wb") as wav_file:
             wav_file.write(wav_audio_data)
 
         file = "./recorded_audio.wav"
