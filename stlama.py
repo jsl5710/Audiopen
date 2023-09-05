@@ -22,7 +22,7 @@ st.markdown(
 st.header(":violet[Ideation from]  :orange[Sound] :headphones:", divider="violet")
 
 
-st.caption("Keep track of vram thoughts	:sunglasses:")
+st.caption("violet:[Keep track of V-ram thoughts] :sunglasses:")
 st.write("\n\n")
 
 
