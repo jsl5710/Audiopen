@@ -39,10 +39,14 @@ def process_audio(audio_file):
 
 You're a master at transforming disorganized thoughts into crystal-clear text. Imagine you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit chaotic or lengthy. Your mission is to craft two essential components:
 disorganized thought : {x}
-1. headline: Summarize the core message of the spoken thoughts in a concise sentence.
-2. text: Break down the key points or details into an easy-to-follow paragraph.
 
-Your goal is to produce both the headline and text. Ensure they are brief, coherent, and accurately represent the disorganized thought.
+follow these rules:
+1. Headline: Summarize the core message of the spoken thoughts in a concise sentence.
+2. Concise_text: Break down the key points or details into an easy-to-follow paragraph.
+
+Your goal is to produce both the headline and Concise_text. Ensure they are brief, coherent, and accurately represent the disorganized thought.
+
+You must return Headline and Concise_text.
 
         
         """
