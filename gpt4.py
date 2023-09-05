@@ -82,8 +82,6 @@ def mainfun():
         # Transcribe and process the audio
         with st.status(""":rainbow[Processing Your Ideas... ]"""):
             headline, clear_text, transcribe_text = process_audio(audio)
-
-        # Display original voice note and final results
             expander = st.expander("Original Voice Note")
             expander.write(transcribe_text)
             st.write(f"Headline: {headline}")
