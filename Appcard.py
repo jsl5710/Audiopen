@@ -50,7 +50,7 @@ def app_header():
 
 
 # Function to transcribe audio and process text
-@st.cache_data
+@st.cache_resource
 def process_audio(audio_file):
     global headline, clear_text
     start_time = time.time()
