@@ -72,8 +72,8 @@ def audiorec_demo_app():
                 with st.expander("Original Transcription"):
                     st.write(transcript)
 
-        st.header(headline)
-        st.text(clear_text)    # removed the unused imported libraries and methods
+            st.header(headline)
+            st.text(clear_text)    # removed the unused imported libraries and methods
 
 if __name__ == "__main__":
     audiorec_demo_app()
