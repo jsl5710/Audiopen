@@ -51,7 +51,7 @@ def app_header():
 # Function to transcribe audio and process text
 @st.cache_resource
 def process_audio(audio_file):
-    global headline, clear_text
+    global headline, clear_text,z
     start_time = time.time()
     # Transcribe the audio
     transcript = openai.Audio.transcribe("whisper-1", audio_file)
@@ -75,7 +75,7 @@ def process_audio(audio_file):
 
     # Process the text
     z = llm_chain.run(x)
-    st.info(z)
+    #st.info(z)
     headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL | re.IGNORECASE)
     clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL | re.IGNORECASE)
 
@@ -108,6 +108,7 @@ def mainfun(wav_audio_data):
 
         expander = st.expander("Original Voice Note")
         expander.write(transcript["text"])
+        st.info(z)
         card(headline, clear_text)
 
 
