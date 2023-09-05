@@ -4,6 +4,7 @@ import config
 from langchain import PromptTemplate, LLMChain # just one line to import these two classes 
 from langchain.llms import OpenAI
 import ffmpeg
+from st_custom_components import st_audiorec
 import openai
 import streamlit as st
 
