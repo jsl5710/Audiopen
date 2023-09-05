@@ -1,12 +1,13 @@
 # Import necessary libraries and modules
 import re
-import config
 import os
+import time
 import streamlit as st
+import openai
+
 from langchain import PromptTemplate
 from langchain import LLMChain
 from langchain.llms import OpenAI
-import openai
 
 # Set OpenAI API key
 openai.api_key = st.secrets['OPENAI_API_KEY']
@@ -23,6 +24,7 @@ st.write("\n\n")
 # Function to transcribe audio and process text
 @st.cache_data
 def process_audio(audio_file):
+    start_time = time.time()
     try:
         # Transcribe the audio
         transcript = openai.Audio.transcribe("whisper-1", audio_file)
@@ -30,30 +32,31 @@ def process_audio(audio_file):
 
         # LangChain template for text processing
         template = """
-        You're an Expert in converting spoken ideas into coherent text. Imagine that you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit unorganized or lengthy. Your task is to transform this spoken content, which is represented by the transcription below, into two key parts:
+        You are an expert in converting messy thoughts into clear text.
+        Messy text: {x}
 
-        1. Headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
-        2. Clear text: Explain the main points or details in a straightforward, easy-to-understand paragraph.
-
-        Transcription: {x}
-
-        the output should consist of both the headline and the Clear text.
+        - Give it a nice headline and clear text
+        - Output should be a list of headline and clear text
         """
 
         sprompt = PromptTemplate.from_template(template)
 
         # Initialize the models
-        llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'], temperature=0)
+        llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'])
         llm_chain = LLMChain(prompt=sprompt, llm=llm)
 
         # Process the text
         z = llm_chain.run(x)
         headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-        clear_text_match = re.search(r"Clear text:\s*(.*?)$", z, re.DOTALL)
+        clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
 
         # Check if matches were found and extract the text
         headline = headline_match.group(1).strip() if headline_match else ""
         clear_text = clear_text_match.group(1).strip() if clear_text_match else ""
+
+        end_time = time.time()
+        execution_time = end_time - start_time
+        st.write("Execution time:", execution_time, "seconds")
 
         return headline, clear_text, transcript
 
@@ -68,12 +71,14 @@ def audiorec_demo_app():
     # Process audio data if available
     if wav_audio_data is not None:
         # Save the audio to a WAV file
-        with open("recorded_audio.wav", "wb") as wav_file:
+        upload_dir = 'uploads'
+        os.makedirs(upload_dir, exist_ok=True)
+        wav_file_path = os.path.join(upload_dir, "recorded_audio.wav")
+        with open(wav_file_path, "wb") as wav_file:
             wav_file.write(wav_audio_data.read())
 
         # Transcribe and process the audio
-        file = "./recorded_audio.wav"
-        audio_file = open(file, "rb")
+        audio_file = open(wav_file_path, "rb")
 
         # Error handling for processing
         try:
@@ -97,8 +102,7 @@ def audiorec_demo_app():
         # Closing the file
         audio_file.close()
         # Removing the temporary file
-        os.remove(file)
-
+        os.remove(wav_file_path)
 
 if __name__ == "__main__":
     # Call the main function
