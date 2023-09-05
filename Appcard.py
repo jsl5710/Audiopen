@@ -87,7 +87,7 @@ def process_audio(audio_file):
     execution_time = end_time - start_time
     st.write("Execution time:", execution_time, "seconds")
 
-    return headline, clear_text, transcript
+    return headline, clear_text_match, transcript
 
 
 def mainfun(wav_audio_data):
