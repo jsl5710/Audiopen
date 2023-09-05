@@ -39,7 +39,7 @@ def process_audio(audio_file):
         You're an Expert in converting spoken ideas into coherent text. Imagine that you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit unorganized or lengthy. Your task is to transform this spoken content, which is represented by the transcription below, into two key parts:
 
 1. Headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
-2. Clear text: Explain the main points or details in a straightforward, easy-to-understand paragraph.
+2. Clear text: get the main points or details in a straightforward, easy-to-understand paragraph.
 
 Transcription: {x}
 
