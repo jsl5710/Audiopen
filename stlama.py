@@ -43,7 +43,7 @@ def process_audio(audio_file):
 
 Transcription: {x}
 
-the output should consist of both the headline and the clear text.
+the output should consist of both the headline and the Clear text.
         
         """
 
@@ -56,7 +56,7 @@ the output should consist of both the headline and the clear text.
         # Process the text
         z = llm_chain.run(x)
         headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-        clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
+        clear_text_match = re.search(r"Clear text:\s*(.*?)$", z, re.DOTALL)
 
         # Check if matches were found and extract the text
         headline = headline_match.group(1).strip() if headline_match else ""
