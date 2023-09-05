@@ -36,14 +36,14 @@ def process_audio(audio_file):
         # LangChain template for text processing
         template = """
 
-        You have the unique ability to convert spoken ideas into coherent text. Imagine that you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit unorganized or lengthy. Your task is to transform this spoken content, which is represented by the transcription below, into two key parts:
+        You're an Expert in converting spoken ideas into coherent text. Imagine that you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit unorganized or lengthy. Your task is to transform this spoken content, which is represented by the transcription below, into two key parts:
 
-1. A concise headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
+1. headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
 2. Clear text: Explain the main points or details in a straightforward, easy-to-understand paragraph.
 
 Transcription: {x}
 
-Your output should consist of both the headline and the clear text. Make sure they are concise, coherent, and accurately represent the spoken content.
+Your output should consist of both the headline and the clear text.
         
         """
 
