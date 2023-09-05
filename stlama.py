@@ -59,7 +59,7 @@ You must return Headline and Concise_text.
 
         # Process the text
         z = llm_chain.run(x)
-        headline_match = re.search(r"headline:\s*(.*?)\n", z, re.DOTALL)
+        headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
         clear_text_match = re.search(r"text:\s*(.*?)$", z, re.DOTALL)
 
         # Check if matches were found and extract the text
