@@ -44,8 +44,8 @@ def card(source, context):
 
 
 def app_header():
-    st.header(":violet[VoiceNote ] :orange[Vault] :headphones:", divider="violet")
-    st.caption(":violet[Capturing Brilliance], One Sound at a Time. :microphone:")
+    st.title(":violet[Audio]  :orange[Whisper] :headphones:")
+    st.write(":violet[Unleash Ideas through Audio]")
     st.write("\n\n")
 
 
