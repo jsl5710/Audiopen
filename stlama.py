@@ -25,7 +25,6 @@ st.write("\n\n")
 
 
 # Function to transcribe audio and process text
-# Function to transcribe audio and process text
 @st.cache_data
 def process_audio(audio_file):
     try:
@@ -44,7 +43,7 @@ def process_audio(audio_file):
 Transcription: {x}
 
 the output should consist of both the headline and the Clear text.
-        
+
         """
 
         sprompt = PromptTemplate.from_template(template)
@@ -84,34 +83,29 @@ def audiorec_demo_app():
         file = "./recorded_audio.wav"
         audio_file = open(file, "rb")
 
-        with st.status(""":rainbow[Processing Your Ideas... ]"""):
-            headline, clear_text, transcript = process_audio(audio_file)
-        # st.info(headline)
-        # st.success(clear_text)
-        from streamlit_extras.colored_header import colored_header
+        # Error handling for processing
+        try:
+            with st.spinner("Processing Your Ideas..."):
+                headline, clear_text, transcript = process_audio(audio_file)
 
-        with st.expander("Original Transcription"):
-            st.write(transcript)
+            with st.expander("Original Transcription"):
+                st.write(transcript)
 
-        colored_header(
-            label=headline,
-            description=clear_text,
-            color_name="violet-70",
-        )
+            if headline and clear_text:
+                from streamlit_extras.colored_header import colored_header
 
-        # from streamlit_card import card
+                colored_header(
+                    label=headline,
+                    description=clear_text,
+                    color_name="violet-70",
+                )
+        except Exception as e:
+            st.error(f"An error occurred while processing: {e}")
 
-        # card(
-        #     title=headline,
-        #     text=clear_text,
-        #     image="http://placekitten.com/300/250",
-        #     url="https://www.google.com",
-        # )
-
-        # Toggle to show the original transcription
-        # on = st.toggle("Original Transcription")
-        # if on:
-        #     st.write(transcript)
+        # Closing the file
+        audio_file.close()
+        # Removing the temporary file
+        os.remove(file)
 
 
 if __name__ == "__main__":
