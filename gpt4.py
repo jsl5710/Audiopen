@@ -74,9 +74,14 @@ def mainfun():
         with open("recorded_audio.wav", "wb") as wav_file:
             wav_file.write(wav_audio_data)
 
+            # Transcribe and process the audio
+            file = "./recorded_audio.wav"
+            audio = open(file, "rb")
+
+
         # Transcribe and process the audio
         with st.status(""":rainbow[Processing Your Ideas... ]"""):
-            headline, clear_text, transcribe_text = process_audio("recorded_audio.wav")
+            headline, clear_text, transcribe_text = process_audio(audio)
 
         # Display original voice note and final results
         expander = st.beta_expander("Original Voice Note")
