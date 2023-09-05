@@ -61,7 +61,7 @@ def audiorec_demo_app():
 
     if wav_audio_data is not None:
             with open("recorded_audio.wav", "wb") as wav_file:
-            wav_file.write(wav_audio_data)
+                wav_file.write(wav_audio_data)
 
         file = "./recorded_audio.wav"
         audio_file = open(file, "rb")
