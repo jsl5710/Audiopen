@@ -84,10 +84,10 @@ def mainfun():
             headline, clear_text, transcribe_text = process_audio(audio)
 
         # Display original voice note and final results
-        expander = st.beta_expander("Original Voice Note")
+        expander = st.expander("Original Voice Note")
         expander.write(transcribe_text)
-        st.write(f"Headline: {headline}")
-        st.write(f"Clear Text: {clear_text}")
+    st.write(f"Headline: {headline}")
+    st.write(f"Clear Text: {clear_text}")
 
 app_header()
 mainfun()
