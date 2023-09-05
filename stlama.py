@@ -36,16 +36,14 @@ def process_audio(audio_file):
         # LangChain template for text processing
         template = """
 
+You're a master at transforming disorganized thoughts into crystal-clear text. Imagine you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit chaotic or lengthy. Your mission is to craft two essential components:
 
- You are an expert in converting messy thoughts into clear text.
-    Messy text: {x}
-    
-    - Give it a nice headline and clear text
-    - Output should be a list of headline and clear text
+1. A captivating headline: Summarize the core message of the spoken thoughts in a concise sentence.
+2. Clear text: Break down the key points or details into an easy-to-follow paragraph.
 
-1. Headline: Summarize the core message of the spoken thoughts in a concise sentence.
-2. clear text: Break down the key points or details into an easy-to-follow paragraph.
-        
+Your goal is to produce both the headline and clear text. Ensure they are brief, coherent, and accurately represent the spoken content.
+
+   here is the thought :{x}     
         """
 
         sprompt = PromptTemplate.from_template(template)
