@@ -75,7 +75,7 @@ def process_audio(audio_file):
 
     # Process the text
     z = llm_chain.run(x)
-    #st.info(z)
+    st.info(z)
     headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL | re.IGNORECASE)
     clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL | re.IGNORECASE)
 
@@ -108,8 +108,6 @@ def mainfun(wav_audio_data):
 
         expander = st.expander("Original Voice Note")
         expander.write(transcript["text"])
-        st.info(headline)
-        st.info(clear_text)
         card(headline, clear_text)
 
 
