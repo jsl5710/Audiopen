@@ -3,11 +3,12 @@ import os
 import time
 import streamlit as st
 import openai
+from langchain.chat_models import ChatOpenAI
 
 from langchain import PromptTemplate
 from st_custom_components import st_audiorec
 from langchain import LLMChain
-from langchain.llms import OpenAI, ChatOpenAI
+from langchain.llms import OpenAI
 
 # Set OpenAI API key
 openai.api_key = st.secrets['OPENAI_API_KEY']
