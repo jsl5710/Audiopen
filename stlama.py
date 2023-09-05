@@ -37,11 +37,11 @@ def process_audio(audio_file):
         template = """
 
 
-    You are an expert in converting messy thoughts into clear text.
+ You are an expert in converting messy thoughts into clear text.
     Messy text: {x}
     
-    - Give it a nice Headline and clear thought
-    - Output should be a list of Headline and clear text
+    - Give it a nice headline and clear text
+    - Output should be a list of headline and clear text
 
 1. Headline: Summarize the core message of the spoken thoughts in a concise sentence.
 2. clear text: Break down the key points or details into an easy-to-follow paragraph.
