@@ -56,6 +56,7 @@ def process_audio(audio_file):
 
         # Process the text
         z = llm_chain.run(x)
+        st.info(z)
         headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
         clear_text_match = re.search(r"clear text:\s*(.*?)\n", z, re.DOTALL)
 
