@@ -41,10 +41,10 @@ def process_audio(audio_file):
     Messy text: {x}
     
     - Give it a nice Headline and clear thought
-    - Output should be a list of Headline and clear thought
+    - Output should be a list of Headline and clear text
 
 1. Headline: Summarize the core message of the spoken thoughts in a concise sentence.
-2. clear thought: Break down the key points or details into an easy-to-follow paragraph.
+2. clear text: Break down the key points or details into an easy-to-follow paragraph.
         
         """
 
@@ -57,7 +57,7 @@ def process_audio(audio_file):
         # Process the text
         z = llm_chain.run(x)
         headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-        clear_text_match = re.search(r"clear thought:\s*(.*?)$", z, re.DOTALL)
+        clear_text_match = re.search(r"clear text:\s*(.*?)$", z, re.DOTALL)
 
         # Check if matches were found and extract the text
         headline = headline_match.group(1).strip() if headline_match else ""
