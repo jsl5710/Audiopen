@@ -102,11 +102,11 @@ def mainfun(wav_audio_data):
             audio = open(file, "rb")
 
             with st.status(""":rainbow[Processing Your Ideas... ]"""):
-                headline, clear_text, transcript = process_audio(audio)
+                headline, clear_text_match, transcript = process_audio(audio)
 
         expander = st.expander("Original Voice Note")
         expander.write(transcript["text"])
-        card(headline, clear_text)
+        card(headline, clear_text_match)
 
 
 app_header()
