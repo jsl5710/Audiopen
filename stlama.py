@@ -2,28 +2,22 @@
 import re
 import config
 import os
+import streamlit as st
 from langchain import PromptTemplate
 from langchain import LLMChain
 from langchain.llms import OpenAI
-import ffmpeg
-import openai
-import streamlit as st
-from st_custom_components import st_audiorec
 
 # Set OpenAI API key
 openai.api_key = st.secrets['OPENAI_API_KEY']
 
 # Set Streamlit page configuration
 st.set_page_config(page_title="streamlit_audio_recorder")
-st.markdown(
-    """<style>.css-1egvi7u {margin-top: -3rem;}</style>""", unsafe_allow_html=True
-)
+st.markdown("""<style>.css-1egvi7u {margin-top: -3rem;}</style>""", unsafe_allow_html=True)
 
 # Define Streamlit app header
-st.header(":violet[Audio]  :orange[Whisper] :headphones:", divider="violet")
+st.header(":violet[Audio]  :orange[Whisper] :headphones:")
 st.write(":violet[Unleash Ideas through Audio]")
 st.write("\n\n")
-
 
 # Function to transcribe audio and process text
 @st.cache_data
@@ -35,16 +29,14 @@ def process_audio(audio_file):
 
         # LangChain template for text processing
         template = """
-
         You're an Expert in converting spoken ideas into coherent text. Imagine that you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit unorganized or lengthy. Your task is to transform this spoken content, which is represented by the transcription below, into two key parts:
 
-1. Headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
-2. Clear text: Explain the main points or details in a straightforward, easy-to-understand paragraph.
+        1. Headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
+        2. Clear text: Explain the main points or details in a straightforward, easy-to-understand paragraph.
 
-Transcription: {x}
+        Transcription: {x}
 
-the output should consist of both the headline and the Clear text.
-
+        the output should consist of both the headline and the Clear text.
         """
 
         sprompt = PromptTemplate.from_template(template)
@@ -68,17 +60,15 @@ the output should consist of both the headline and the Clear text.
         st.error("Error: The audio file is too short. Minimum audio length is 0.1 seconds.")
         return "", "", None
 
-
-# Streamlit app
 def audiorec_demo_app():
     # Record audio using the custom component
-    wav_audio_data = st_audiorec()
+    wav_audio_data = st.file_uploader("Record audio", type=["wav"])
 
     # Process audio data if available
     if wav_audio_data is not None:
         # Save the audio to a WAV file
         with open("recorded_audio.wav", "wb") as wav_file:
-            wav_file.write(wav_audio_data)
+            wav_file.write(wav_audio_data.read())
 
         # Transcribe and process the audio
         file = "./recorded_audio.wav"
