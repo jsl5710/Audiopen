@@ -63,14 +63,14 @@ def audiorec_demo_app():
             with open("recorded_audio.wav", "wb") as wav_file:
                 wav_file.write(wav_audio_data)
 
-        file = "./recorded_audio.wav"
-        audio_file = open(file, "rb")
+            file = "./recorded_audio.wav"
+            audio_file = open(file, "rb")
 
-        with st.spinner("Processing Your Ideas... "):    # Spinner instead of status method to show progress
-            headline, clear_text, transcript = process_audio(audio_file)
+            with st.spinner("Processing Your Ideas... "):    # Spinner instead of status method to show progress
+                headline, clear_text, transcript = process_audio(audio_file)
 
-        with st.expander("Original Transcription"):
-            st.write(transcript)
+    with st.expander("Original Transcription"):
+        st.write(transcript)
 
         st.header(headline)
         st.text(clear_text)    # removed the unused imported libraries and methods
