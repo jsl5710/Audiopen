@@ -108,6 +108,9 @@ def mainfun(wav_audio_data):
 
         expander = st.expander("Original Voice Note")
         expander.write(transcript["text"])
+        expander1 = st.expander("Refined Text Note")
+        expander1.write(headline)
+        expander1.write(clear_text)
         card(headline, clear_text)
 
 
