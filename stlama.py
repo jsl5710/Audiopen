@@ -37,17 +37,14 @@ def process_audio(audio_file):
         template = """
 
 
-You're a master at transforming disorganized thoughts into crystal-clear text. Imagine you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit chaotic or lengthy. Your mission is to craft two essential components:
-disorganized thought : {x}
+    You are an expert in converting messy thoughts into clear text.
+    Messy text: {x}
+    
+    - Give it a nice Headline and clear thought
+    - Output should be a list of Headline and clear thought
 
-follow these rules:
 1. Headline: Summarize the core message of the spoken thoughts in a concise sentence.
-2. Concise_text: Break down the key points or details into an easy-to-follow paragraph.
-
-Your goal is to produce both the headline and Concise_text. Ensure they are brief, coherent, and accurately represent the disorganized thought.
-
-You must return Headline and Concise_text.
-
+2. clear thought: Break down the key points or details into an easy-to-follow paragraph.
         
         """
 
@@ -60,7 +57,7 @@ You must return Headline and Concise_text.
         # Process the text
         z = llm_chain.run(x)
         headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-        clear_text_match = re.search(r"text:\s*(.*?)$", z, re.DOTALL)
+        clear_text_match = re.search(r"clear thought:\s*(.*?)$", z, re.DOTALL)
 
         # Check if matches were found and extract the text
         headline = headline_match.group(1).strip() if headline_match else ""
