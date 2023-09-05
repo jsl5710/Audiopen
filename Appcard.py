@@ -77,17 +77,19 @@ def process_audio(audio_file):
     # Process the text
     z = llm_chain.run(x)
     st.info(z)
-    headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-    clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
+    headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL | re.IGNORECASE)
+    clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL | re.IGNORECASE)
 
-    # Check if matches were found and extract the text
+# Check if matches were found and extract the text
     headline = headline_match.group(1).strip() if headline_match else ""
+    clear_text = clear_text_match.group(1).strip() if clear_text_match else ""
+
 
     end_time = time.time()
     execution_time = end_time - start_time
     st.write("Execution time:", execution_time, "seconds")
 
-    return headline, clear_text_match, transcript
+    return headline, clear_text, transcript
 
 
 def mainfun(wav_audio_data):
@@ -102,11 +104,11 @@ def mainfun(wav_audio_data):
             audio = open(file, "rb")
 
             with st.status(""":rainbow[Processing Your Ideas... ]"""):
-                headline, clear_text_match, transcript = process_audio(audio)
+                headline, clear_text, transcript = process_audio(audio)
 
         expander = st.expander("Original Voice Note")
         expander.write(transcript["text"])
-        card(headline, clear_text_match)
+        card(headline, clear_text)
 
 
 app_header()
