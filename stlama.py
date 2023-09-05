@@ -56,7 +56,7 @@ Your goal is to produce both the headline and clear text. Ensure they are brief,
         z = llm_chain.run(x)
         st.info(z)
         headline_match = re.search(r"Headline:\s*(.*?)\n", z, re.DOTALL)
-        clear_text_match = re.search(r"Clear text:\s*(.*?)$", z, re.DOTALL)
+        clear_text_match = re.search(r"Clear Text:\s*(.*?)$", z, re.DOTALL)
 
         # Check if matches were found and extract the text
         headline = headline_match.group(1).strip() if headline_match else ""
