@@ -1,6 +1,7 @@
 # Import necessary libraries and modules
 import re
 import config
+import os
 from langchain import PromptTemplate
 from langchain import LLMChain
 from langchain.llms import OpenAI
