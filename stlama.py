@@ -32,14 +32,15 @@ def process_audio(audio_file):
 
         # LangChain template for text processing
         template = """
-        You are an expert in converting messy thoughts into clear text.
-        Messy text: {x}
+        You have the unique ability to convert spoken ideas into coherent text. 
+        Imagine that you're assisting someone who has just recorded their thoughts in audio. 
+        These thoughts might be a bit unorganized or lengthy. Your task is to transform this spoken content into two key parts:
 
-        - Give it a nice headline and clear text
-        - Output should be a list of headline and clear text
+        1. A concise headline: Capture the essence of the spoken ideas in a short, attention-grabbing sentence.
+        2. Clear text: Explain the main points or details in a straightforward, easy-to-understand paragraph.
         """
 
-        sprompt = PromptTemplate.from_template(template)
+        sprompt = PromptTemplate.from_template(template, x=x)
 
         # Initialize the models
         llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets['OPENAI_API_KEY'])
@@ -73,7 +74,7 @@ def audiorec_demo_app():
     if wav_audio_data2 is not None:
         # Save the audio to a WAV file
         with open("recorded_audio.wav", "wb") as wav_file:
-            wav_file.write(wav_audio_data)
+            wav_file.write(wav_audio_data2)
 
             # Transcribe and process the audio
             file = "./recorded_audio.wav"
@@ -94,18 +95,16 @@ def audiorec_demo_app():
                     color_name="violet-70",
                 )
         except Exception as e:
-
-    
-
+            st.error(f"An error occurred while processing: {e}")
 
     # Process audio data if available
-    if wav_audio_data2 is not None:
+    if wav_audio_data1 is not None:
         # Save the audio to a WAV file
         upload_dir = 'uploads'
         os.makedirs(upload_dir, exist_ok=True)
         wav_file_path = os.path.join(upload_dir, "recorded_audio.wav")
         with open(wav_file_path, "wb") as wav_file:
-            wav_file.write(wav_audio_data.read())
+            wav_file.write(wav_audio_data1.read())
 
         # Transcribe and process the audio
         audio_file = open(wav_file_path, "rb")
