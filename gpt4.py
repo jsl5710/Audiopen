@@ -69,8 +69,8 @@ def audiorec_demo_app():
             with st.spinner("Processing Your Ideas... "):    # Spinner instead of status method to show progress
                 headline, clear_text, transcript = process_audio(audio_file)
 
-    with st.expander("Original Transcription"):
-        st.write(transcript)
+                with st.expander("Original Transcription"):
+                    st.write(transcript)
 
         st.header(headline)
         st.text(clear_text)    # removed the unused imported libraries and methods
