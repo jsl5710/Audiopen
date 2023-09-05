@@ -70,7 +70,7 @@ def process_audio(audio_file):
     sprompt = PromptTemplate.from_template(template)
 
     # Initialize the models
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets["OPENAI_API_KEY"])
+    llm = OpenAI(model_name="gpt-3.5-turbo", openai_api_key=st.secrets["OPENAI_API_KEY"])
 
     llm_chain = LLMChain(prompt=sprompt, llm=llm)
 
