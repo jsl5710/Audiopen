@@ -46,7 +46,6 @@ def card(source, context):
 def app_header():
     st.title(":violet[Audio]  :orange[Whisper] :headphones:")
     st.write(":violet[Unleash Ideas through Audio]")
-    st.write("\n\n")
 
 
 # Function to transcribe audio and process text
