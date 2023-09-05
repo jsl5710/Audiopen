@@ -36,7 +36,7 @@ def process_audio(audio_file):
         # LangChain template for text processing
         template = """
 
-You're a master at transforming disorganized thoughts into crystal-clear text. Imagine you're assisting someone who has just recorded their thoughts in audio. These thoughts might be a bit chaotic or lengthy. Your mission is to craft two essential components:
+You're a master at transforming disorganized thoughts into crystal-clear text.  you're assisting user, who has just recorded their thoughts in audio. These thoughts might be a bit chaotic or lengthy. Your mission is to craft two essential components:
 
 1. A captivating headline: Summarize the core message of the spoken thoughts in a concise sentence.
 2. Clear text: Break down the key points or details into an easy-to-follow paragraph.
