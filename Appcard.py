@@ -12,7 +12,7 @@ from langchain.chat_models import ChatOpenAI
 
 
 # Set OpenAI API key
-openai.api_key = st.secrets["OPENAI_API_KEY""]
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Set Streamlit page configuration
 st.set_page_config(page_title="streamlit_audio_recorder")
