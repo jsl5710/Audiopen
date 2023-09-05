@@ -44,7 +44,7 @@ def card(source, context):
 
 
 def app_header():
-    st.title(":violet[Audio]  :orange[Whisper] :headphones:")
+    st.title(":violet[Whisper]  :orange[Audio] :headphones:")
     st.write(":violet[Unleash Ideas through Audio]")
 
 
