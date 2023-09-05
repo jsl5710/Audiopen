@@ -19,7 +19,7 @@ st.markdown(
 )
 
 # Define Streamlit app header
-st.header(":violet[Ideation from]  :orange[Audio] :headphones:", divider="violet")
+st.header(":violet[Audio]  :orange[Whisper] :headphones:", divider="violet")
 st.write(":violet[Unleash Ideas through Audio]")
 st.write("\n\n")
 
